@@ -148,8 +148,16 @@ async def transcribe_audio(
     api_key = os.getenv("FASIRI_API_KEY")
     if not api_key:
         raise HTTPException(status_code=503, detail="FASIRI_API_KEY is not configured")
-    if audio.content_type not in {"audio/wav", "audio/x-wav", "audio/mpeg", "audio/mp3", "application/octet-stream"}:
-        raise HTTPException(status_code=415, detail="Upload a WAV or MP3 audio file")
+    if audio.content_type not in {
+        "audio/wav",
+        "audio/x-wav",
+        "audio/mpeg",
+        "audio/mp3",
+        "audio/webm",
+        "audio/ogg",
+        "application/octet-stream",
+    }:
+        raise HTTPException(status_code=415, detail="Upload a WAV, MP3, WebM, or OGG audio file")
 
     audio_bytes = await audio.read()
     if not audio_bytes:
