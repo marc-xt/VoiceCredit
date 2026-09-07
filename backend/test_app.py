@@ -22,11 +22,13 @@ def test_create_and_list_transaction() -> None:
             },
         )
         listed = client.get("/api/transactions?limit=1")
+        deleted = client.delete(f"/api/transactions/{created.json()['id']}")
     assert created.status_code == 201
     assert created.json()["customer"] == "Test Customer"
     assert created.json()["synced"] is False
     assert listed.status_code == 200
     assert listed.json()[0]["id"] == created.json()["id"]
+    assert deleted.status_code == 204
 
 
 def test_transcribe_requires_key_without_calling_fasiri(monkeypatch) -> None:

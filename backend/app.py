@@ -139,6 +139,14 @@ def create_transaction(payload: TransactionCreate) -> Transaction:
     return row_to_transaction(row)
 
 
+@app.delete("/api/transactions/{transaction_id}", status_code=204)
+def delete_transaction(transaction_id: str) -> None:
+    with get_connection() as connection:
+        cursor = connection.execute("DELETE FROM transactions WHERE id = ?", (transaction_id,))
+        if cursor.rowcount == 0:
+            raise HTTPException(status_code=404, detail="Transaction not found")
+
+
 @app.post("/api/transcribe", response_model=TranscriptionResponse)
 async def transcribe_audio(
     audio: Annotated[UploadFile, File(description="WAV or MP3 recording")],
