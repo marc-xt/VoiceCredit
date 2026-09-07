@@ -1,5 +1,6 @@
 fastapi
 fasiri
 python-multipart
+python-dotenv
 pytest
 uvicorn[standard]
