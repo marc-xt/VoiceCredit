@@ -24,10 +24,10 @@ from pydantic import BaseModel, Field
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
-DATABASE_PATH = Path(os.getenv("DATABASE_PATH", BASE_DIR / "voicecredit.db"))
+DATABASE_PATH = Path(os.getenv("DATABASE_PATH") or BASE_DIR / "voicecredit.db")
 STT_LANGUAGE = os.getenv("STT_LANGUAGE", "lug")
-AUTH_SECRET = os.getenv("AUTH_SECRET", "local-development-secret-change-me")
-SESSION_DAYS = int(os.getenv("SESSION_DAYS", "30"))
+AUTH_SECRET = os.getenv("AUTH_SECRET") or "local-development-secret-change-me"
+SESSION_DAYS = int(os.getenv("SESSION_DAYS") or "30")
 SUPPORTED_LANGUAGES = {"lug", "swa", "eng"}
 
 
