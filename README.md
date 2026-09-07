@@ -35,6 +35,20 @@ npm run dev
 
 Open http://127.0.0.1:5173 and create an account. Transactions, sessions, and audio logs are stored in SQLite and scoped to the authenticated user.
 
+## Deploy to Vercel
+
+Import `marc-xt/VoiceCredit` in Vercel. The repository includes `vercel.json` and `api/index.py`, so Vercel builds the Vite app and routes `/api/*` to FastAPI. Add these project environment variables in Vercel:
+
+```dotenv
+FASIRI_API_KEY=your-rotated-fasiri-key
+AUTH_SECRET=use-a-long-random-secret
+DATABASE_PATH=/tmp/voicecredit.db
+OFFLINE_MODE=false
+CORS_ORIGINS=https://your-project.vercel.app
+```
+
+SQLite on Vercel is temporary serverless storage. For production persistence, set `DATABASE_PATH` to a durable database service or deploy the backend with a persistent SQLite volume; the frontend can then use that backend URL as `VITE_API_URL`.
+
 ## Backend API
 
 - `POST /api/auth/register` creates an account and returns a bearer token.

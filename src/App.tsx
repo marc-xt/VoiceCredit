@@ -18,7 +18,7 @@ type Transaction = {
 type ApiTransaction = Omit<Transaction, 'time'> & { timestamp: string }
 type QueuedTransaction = Omit<Transaction, 'id' | 'time'> & { localId: string }
 
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000'
+const API_BASE_URL = import.meta.env.VITE_API_URL ?? (import.meta.env.DEV ? 'http://127.0.0.1:8000' : '')
 const formatMoney = (amount: number) => `₦${amount.toLocaleString('en-NG')}`
 const formatTime = (timestamp: string) => new Date(timestamp).toLocaleString('en-NG', { dateStyle: 'medium', timeStyle: 'short' })
 const mapTransaction = (transaction: ApiTransaction): Transaction => ({ ...transaction, time: formatTime(transaction.timestamp) })
