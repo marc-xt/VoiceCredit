@@ -241,6 +241,14 @@ app.add_middleware(
 )
 
 
+@app.middleware("http")
+async def normalize_vercel_api_path(request, call_next):
+    if os.getenv("VERCEL") and request.scope["path"].startswith("/api/"):
+        request.scope["path"] = request.scope["path"][4:]
+        request.scope["raw_path"] = request.scope["raw_path"][4:]
+    return await call_next(request)
+
+
 @app.get("/health")
 def health() -> dict[str, str | bool]:
     return {
