@@ -1,0 +1,5 @@
+fastapi
+fasiri
+python-multipart
+pytest
+uvicorn[standard]
